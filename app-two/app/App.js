@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from './screens/home';
 import Wishlist from './screens/wishlist';
-import FindFriends from './screens/findfriends';
+import RetreieveSadaqah from './screens/retrievesadaqah';
 import SendGift from './screens/sendGift';
 import Zakat from './screens/zakat';
 
@@ -26,8 +26,8 @@ function MyStack() {
         options={{ headerShown: false}} 
         /> 
         <Stack.Screen 
-        name="Findfriends" 
-        component={FindFriends}
+        name="RetreieveSadaqah" 
+        component={RetreieveSadaqah}
         options={{ headerShown: false}} 
         /> 
          <Stack.Screen 

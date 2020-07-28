@@ -11,9 +11,11 @@ let customFonts  = {
     'Futura': require('../assets/fonts/Futura.ttf'),
   };
   
-export default class FindFriends extends React.Component  {
+export default class RetreieveSadaqah extends React.Component  {
     state = {
       fontsLoaded: false,
+      requests: [],
+      
     };
   
     async _loadFontsAsync() {
@@ -25,9 +27,29 @@ export default class FindFriends extends React.Component  {
       this._loadFontsAsync();
      
     }
-    getDataa(){
-      return [{"id": "1", "name": "Abdul Jabbar", "description": "Can't afford medication", "phone": "123456", "email": "someone@someone.com", "status": "open"}, {"id": "2", "name": "Abdul Rahman", "description": "Lost my job so cant pay kid's school fees", "phone": "123456", "email": "someone@someone.com", "status": "open"}]
+
+
+    updateReq(id){
+      fetch('https://us-central1-aiot-fit-xlab.cloudfunctions.net/updatesadaqahrequestbyid', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "id" : id
+        })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+              console.log(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
     }
+
+
     getData(){
       fetch('https://us-central1-aiot-fit-xlab.cloudfunctions.net/getallsadaqahrequests', {
         method: 'GET'
@@ -35,7 +57,8 @@ export default class FindFriends extends React.Component  {
      .then((response) => response.json())
      .then((responseJson) => {
        
-        console.log(responseJson)
+        console.log(responseJson.requests)
+       this.setState({requests:responseJson.requests})
         {/*for(i=0;i<6;i++){
             if(obj[i].lat == "" || obj[i].long == "" || obj[i].lat == "0" || obj[i].long == "0"){
              obj[i].lat=25.7664362;
@@ -51,6 +74,7 @@ export default class FindFriends extends React.Component  {
      .catch((error) => {
         console.error(error);
      });
+     return this.state.requests
     }
      
      
@@ -67,7 +91,7 @@ export default class FindFriends extends React.Component  {
          
 
       <ScrollView style={styles.scrollcontainer}>
-      <FriendList itemList={this.getDataa()}/>
+      <FriendList itemList={this.getData()}/>
       
      
       </ScrollView>
@@ -84,12 +108,11 @@ export default class FindFriends extends React.Component  {
         container: {
             height:'100%',
             position:'relative',
-            
+            flex:1,
           },
           scrollcontainer: {
             height:'100%',
             position:'relative',
-            top:'20%',
             
             
           },
@@ -115,7 +138,8 @@ export default class FindFriends extends React.Component  {
             height:'15%',
             textAlignVertical:'center',
             textAlign:'center',
-            color:'#FFF'
+            color:'#FFF',
+            marginBottom:'5%'
         },
         welcome2: {
           fontFamily:'Avenir',
@@ -126,7 +150,8 @@ export default class FindFriends extends React.Component  {
           elevation:2,
           color:'black',
           width:'70%',
-          textAlign:'center'
+          textAlign:'center',
+          marginBottom:'5%'
       },
       welcome3: {
         fontFamily:'Futura',
@@ -137,7 +162,8 @@ export default class FindFriends extends React.Component  {
         elevation:2,
         color:'black',
         width:'85%',
-        textAlign:'left'
+        textAlign:'left',
+        marginBottom:'45%'
     },
     btn: {
       fontFamily:'Avenir',

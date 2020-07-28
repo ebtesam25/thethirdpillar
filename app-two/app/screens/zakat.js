@@ -41,7 +41,7 @@ export default class Zakat extends React.Component  {
       }
     
 
-    zakat= async () =>{
+    getZakat(){
       
         fetch('https://us-central1-aiot-fit-xlab.cloudfunctions.net/findzakat', {
             method: 'POST',
@@ -49,19 +49,20 @@ export default class Zakat extends React.Component  {
             'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              "gold":this.state.gold,  
-              "siilver": this.state.silver,   
-              "cash": this.state.cash,         
-              "receivable": this.state.receivables,
-              "shares":this.state.stock,
-              "payable":this.state.payables,
-              "loan":this.state.loan,
+              "gold":this.state.gold.toString(),  
+              "silver": this.state.silver.toString(),   
+              "cash": this.state.cash.toString(),         
+              "receivable": this.state.receivables.toString(),
+              "shares":this.state.stock.toString(),
+              "payable":this.state.payables.toString(),
+              "loan":this.state.loan.toString(),
   
             })
     })
         .then((response) => response.json())
         .then((responseJson) => {
-    console.log(responseJson);
+           console.log(responseJson);
+           this.setState({zakat:responseJson.zakat})
         })
         .catch((error) => {
             console.error(error);
@@ -97,9 +98,9 @@ export default class Zakat extends React.Component  {
             <TextInput placeholder = "Loan   " style={styles.text} value={this.state.loan} onChangeText={(val) => this.updateInputVal(val, 'loan')}></TextInput>
 
 
-           <Text style={styles.text}>{this.state.zakat}</Text>
+           <Text style={styles.text2}>{this.state.zakat}</Text>
 
-          <Text style={styles.btn} onPress={()=>this.zakatval()}>CALCULATE</Text>
+          <Text style={styles.btn} onPress={()=>this.getZakat()}>CALCULATE</Text>
         </View>
         );
         }
@@ -131,6 +132,16 @@ export default class Zakat extends React.Component  {
             marginBottom:5,
             color:'#0a2463',
         },
+        text2:{
+          fontSize:25,
+          fontFamily:'Futura',
+          zIndex:4,
+          position:'relative',
+          top:'33%',
+          left:'20%',
+          marginBottom:5,
+          color:'red',
+      },
         
         
         

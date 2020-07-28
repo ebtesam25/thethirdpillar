@@ -45,10 +45,10 @@ export default class SendGift extends React.Component  {
         if (this.state.fontsLoaded) {
         return (
         <View style={styles.container}>
-        <Text style={styles.welcome} onPress={() => this.props.navigation.navigate('#')}>Chandler's Wishlist</Text>
+        <Text style={styles.welcome} onPress={() => this.props.navigation.navigate('#')}>Sadaqah</Text>
         
         
-          <Text style={styles.welcome3}>Send Chandler a gift</Text>
+          <Text style={styles.welcome3}>Send Anon a gift</Text>
          
          
 

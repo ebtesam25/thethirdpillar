@@ -37,6 +37,9 @@ export default function AddWish({ name}) {
                 fontFamily:'Avenir',
                 marginTop: '5%',
                 marginLeft:'10%',
+                position:'absolute',
+                top:'40%',
+                elevation:5,
             },
            
         });

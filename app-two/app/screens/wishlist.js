@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, TextInput } from 'react-native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import WishList from '../components/wishList';
@@ -14,6 +14,7 @@ let customFonts  = {
 export default class Wishlist extends React.Component  {
     state = {
       fontsLoaded: false,
+      description: ""
     };
   
     async _loadFontsAsync() {
@@ -24,46 +25,33 @@ export default class Wishlist extends React.Component  {
     componentDidMount() {
       this._loadFontsAsync();
       
+    }
+    updateInputVal = (val, prop) => {
+      const state = this.state;
+      state[prop] = val;
+      this.setState(state);
+    }
 
-    fetch('https://us-central1-aiot-fit-xlab.cloudfunctions.net/add2hackywishlist', {
+    addRequest(){
+      fetch('https://us-central1-aiot-fit-xlab.cloudfunctions.net/addasadaqahrequest', {
       method: 'POST',
       headers: {
       'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        "user" : "me", "name":"Porsche"
+      body: JSON.stringify( {"phone":"20111111000","name":"Abdallah","description":this.state.description, "email":"abdallah@needshelp.com"})
       })
-})
-  .then((response) => response.json())
-  .then((responseJson) => {
-console.log(responseJson);
-  })
-  .catch((error) => {
-      console.error(error);
-  });
+        .then((response) => response.json())
+        .then((responseJson) => {
+      console.log(responseJson);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     }
 
 
     
 
-    getData() {
-      fetch('https://us-central1-aiot-fit-xlab.cloudfunctions.net/gethackywishlist', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "user" : "me"
-        })
-})
-    .then((response) => response.json())
-    .then((responseJson) => {
-console.log(responseJson.list);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-      }
      
   
     render(){
@@ -79,11 +67,11 @@ console.log(responseJson.list);
          
          
 
-      <ScrollView style={styles.scrollcontainer}>
-      <WishList itemList={this.getData()}/>
-      <AddWish></AddWish>
-      <Image source={require('../assets/images/plus.png')} style={{alignSelf:'center', marginTop:'30%'}}></Image>
-      </ScrollView>
+     
+      <TextInput style={styles.name} placeholder="Description    " onChangeText={(val) => this.updateInputVal(val, 'description')}>{this.state.description}</TextInput>
+      <Text style={styles.btn} onPress={() => this.addRequest()}>Add Request</Text>
+      
+     
     </View>
         )}
 
@@ -156,7 +144,7 @@ console.log(responseJson.list);
       fontSize:20,
       position:'relative',
       alignSelf:'center',
-      top:'-20%',
+      top:'70%',
       elevation:2,
       color:'black',
       width:'75%',
@@ -182,8 +170,22 @@ console.log(responseJson.list);
     backgroundColor:'#FFF',
     padding:'5%',
     borderRadius:15,
-    shadowColor:'#000',
+    
     elevation:4,
+},
+name: {
+  fontSize: 30,
+  color: '#000',
+  fontFamily:'Futura',
+  alignSelf:'center',
+  position:'absolute',
+  top:'40%',
+  borderColor:'#EA765D',
+  borderWidth:1,
+  width:'75%',
+  height:'10%',
+  borderRadius:10,
+  paddingLeft:'5%',
 },
         
       });

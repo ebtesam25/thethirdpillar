@@ -32,7 +32,7 @@ export default class Home extends React.Component  {
           <Text style={styles.welcome3}>Connect with the Muslim Ummah and help each other out!</Text>
          
           <Image source={require('../assets/images/splash.png')} style={styles.logo}></Image>
-          <Text style={styles.btn} onPress={() => this.props.navigation.navigate('Findfriends')}>Give Sadaqah</Text>
+          <Text style={styles.btn} onPress={() => this.props.navigation.navigate('RetreieveSadaqah')}>Give Sadaqah</Text>
           <Text style={styles.btn2} onPress={() => this.props.navigation.navigate('Wishlist')}>Request for help</Text>
           <Text style={styles.btn3} onPress={() => this.props.navigation.navigate('Zakat')}>Zakat calculator</Text>
         </View>
